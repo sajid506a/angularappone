@@ -1,8 +1,10 @@
-name: APP CI
+name: Node.js CI
 
 on:
   push:
+    branches: [main, master, dev/*]
   pull_request:
+    branches: [main, master, dev/*]
 
 jobs:
   build:
@@ -32,9 +34,10 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '20'
+          thresholds: '60 80'
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
         with:
           recreate: true
-          path: code-coverage-results.md
+        path: code-coverage-results.md
